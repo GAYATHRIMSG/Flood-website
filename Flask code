@@ -1,0 +1,312 @@
+from flask import Flask, render_template_string
+
+app = Flask(__name__)
+
+html_content = '''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Coutralam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4; /* Light background color */
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            margin: 0 auto;
+            background-color: white; /* White container background */
+            padding: 20px; /* Add padding to the container */
+            border-radius: 8px; /* Round the container corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .nav {
+            display: flex;
+        }
+        .nav a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+        }
+        .hero {
+            background-image: url('{{ url_for('static', filename='your-background-image.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+        }
+        .hero h2 {
+            margin: 0;
+            font-size: 2em;
+        }
+.hero q{
+font-size: 1.5em;
+            margin-top: 10px;}
+        .hero p {
+            font-size: 1.5em;
+            margin-top: 10px;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 30px;
+        }
+        .history-section, .cascades-section, .realtime-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #f9f9f9; /* Light gray background for sections */
+        }
+        .history-section p {
+            font-size: 1.2em;
+            line-height: 1.7;
+        }
+        .falls-gallery {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .falls-image {
+            width: 300px;
+            height: 225px;
+            border: 1px solid #ccc;
+            margin: 10px;
+        }
+        .falls-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .falls-image p {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1em;
+        }
+        .prediction-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #fff; /* White background for cards */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+            margin-bottom: 20px;
+        }
+        .prediction-card h2 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+        .prediction-card p {
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+
+        .level-float {
+            position: sticky;
+            top: 20px; /* Adjust as needed */
+            background-color: #ddd; /* Slightly darker background for sticky headers */
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+        @media (max-width: 768px) {
+            .level-float {
+                top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>The Coutralam</h1>
+            <nav class="nav">
+                <a href="#history">History</a>
+                <a href="#cascades">Cascades</a>
+                <a href="#realtime">Realtime Data</a>
+            </nav>
+        </div>
+
+        <div class="hero">
+            <q>Welcome to The Coutralam</q>
+            <p>qoutes</p>
+        </div>
+
+        <div class="content">
+            <div id="history" class="history-section">
+                <div class="level-float"><h2>History</h2></div>
+                <img src="{{ url_for('static', filename='coutralam-image.jpg') }}" alt="Coutralam" class="coutralam-image" style="max-width: 400px; float:left; margin-right: 20px;"> 
+                <p>Old Courtallam Falls - A More Intimate Ayurvedic Experience. Courtallam, also known as Kutralam, is a town in Tamil Nadu, India known for its waterfalls. The falls are located in the Western Ghats on the Chittar River. </p>
+                <p>Falls: The falls are a major tourist attraction and are known for their medicinal properties. The main falls are called Peraruvi and are about 60 meters high. Other falls include Small Falls (Citharuvi), Five Falls (Iyentharuvi), Tiger Falls (Puliyaruvi), and Honey Falls (Theanaruvi). 
+                Temples: The town is home to ancient temples with legends associated with them. 
+                Old Courtallam Falls: These falls are about 8 km from the main falls and are said to be a favorite for children.</p>
+            </div>
+
+            <div id="cascades" class="cascades-section">
+                <div class="level-float"><h2>Cascades</h2></div>
+                <div class="falls-gallery">
+                    <div class="falls-image">
+                        <img src="{{ url_for('static', filename='main-falls.jpg') }}" alt="Main Falls">
+                        <p>Main Falls (Peraruvi)</p>
+                    </div>
+                    <div class="falls-image">
+                        <img src="{{ url_for('static', filename='tiger-falls.jpg') }}" alt="Tiger Falls">
+                        <p>Tiger Falls (Puliyaruvi)</p>
+                    </div>
+                    <div class="falls-image">
+                        <img src="{{ url_for('static', filename='five-falls.jpg') }}" alt="Five Falls">
+                        <p>Five Falls (Aintharuvi)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="realtime" class="realtime-section">
+                <div class="level-float"><h2>Realtime Data</h2></div>
+                <div id="alert-message"></div>
+                <div id="prediction-data"></div>
+            </div>
+        </div>
+    </div>
+
+  
+   <script type="module">
+        // Your JavaScript code for Firebase and interactivity will go here.
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCt1SuZh-dSKGX-FoFMvDGAJDSNUkvaZ4Q",
+            authDomain: "my-water-flow-project.firebaseapp.com",
+            databaseURL: "https://my-water-flow-project-default-rtdb.firebaseio.com",
+            projectId: "my-water-flow-project",
+            storageBucket: "my-water-flow-project.firebasestorage.app",
+            messagingSenderId: "669975750113",
+            appId: "1:669975750113:web:13dc07197139fc2a349ea0",
+            measurementId: "G-RM1WG8H61G"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        const updatePredictionData = (data) => {
+            const floodRiskColor = data.predictionData.floodRisk === "Yes" ? "red" : "green";
+            const redLEDStyle = data.redLEDState === "on" ? "color: red; font-weight: bold; text-decoration: underline;" : "color: green; font-weight: bold; text-decoration: underline;";
+            const greenLEDStyle = data.greenLEDState === "on" ? "color: green; font-weight: bold; text-decoration: underline;" : "color: red; font-weight: bold; text-decoration: underline;";
+            const formalColor = "#555";
+            const predictionDiv = document.getElementById("prediction-data");
+            const alertDiv = document.getElementById("alert-message");
+
+            const floodRisk = data.predictionData.floodRisk;
+            const redLEDState = data.redLEDState;
+
+            if (floodRisk === "Yes" || redLEDState === "on") {
+                alertDiv.innerHTML = `
+                    <h1 style="color: red; text-align: center;">RESTRICTED ENTRY</h1>
+                    <h2 style="text-align: center;">Date: ${data.predictionData.date}</h2>
+                `;
+            } else {
+                alertDiv.innerHTML = `
+                    <h1 style="color: green; text-align: center;">BEST DAY FOR VACATION</h1>
+                    <h2 style="text-align: center;">Date: ${data.predictionData.date}</h2>
+                `;
+            }
+
+            predictionDiv.innerHTML = `
+                <div class="prediction-card">
+                    <h2>KUTRALAM MAIN FALLS</h2>
+                    <p><strong>Date:</strong> ${data.predictionData.date}</p>
+                    <p><strong>Time:</strong> ${data.predictionData.time}</p>
+                    <p><strong>Waterfall Name:</strong> ${data.predictionData.waterfallName}</p>
+                    <p><strong>District Name:</strong> ${data.predictionData.districtName}</p>
+                    <p><strong>Flood Risk:</strong> <span style="color:${floodRiskColor};">${floodRisk}</span></p>
+                    <p><strong>Rainfall Rate:</strong> ${data.predictionData.rainfallRate}</p>
+                    <p><strong>Temperature:</strong> ${data.predictionData.temperature}</p>
+                    <p><strong>Day:</strong> ${data.predictionData.day}</p>
+                    <h2>Main Falls</h2>
+                    <p><strong>Flow Rate:</strong> ${data.flowRate} mL/sec</p>
+                    <p><strong>Buzzer State:</strong> ${data.buzzerState}</p>
+                    <p><strong>Green LED State:</strong> <span style="${greenLEDStyle}">${data.greenLEDState}</span></p>
+                    <p><strong>Red LED State:</strong> <span style="${redLEDStyle}">${data.redLEDState}</span></p>
+                </div>
+                <div class="prediction-card">
+                    <h2>Five Falls</h2>
+                    <p><strong>Flow Rate:</strong> ${data.flowRate} mL/sec</p>
+                    <p><strong>Buzzer State:</strong> ${data.buzzerState}</p>
+                    <p><strong>Green LED State:</strong> <span style="${greenLEDStyle}">${data.greenLEDState}</span></p>
+                    <p><strong>Red LED State:</strong> <span style="${redLEDStyle}">${data.redLEDState}</span></p>
+                </div>
+                <div class="prediction-card">
+                    <h2>Tiger Falls</h2>
+                    <p><strong>Flow Rate:</strong> ${data.flowRate} mL/sec</p>
+                    <p><strong>Buzzer State:</strong> ${data.buzzerState}</p>
+                    <p><strong>Green LED State:</strong> <span style="${greenLEDStyle}">${data.greenLEDState}</span></p>
+                    <p><strong>Red LED State:</strong> <span style="${redLEDStyle}">${data.redLEDState}</span></p>
+                </div>
+            `;
+        };
+
+        const updateKutralamData = () => {
+            const data = {
+                predictionData: {
+                    floodRisk: 'Yes',
+                    date: '2025-01-23',
+                    time: '12:00',
+                    waterfallName: 'Kutralam Falls',
+                    districtName: 'Kutralam',
+                    rainfallRate: '50mm/hr',
+                    temperature: '30°C',
+                    day: 'Monday'
+                },
+                flowRate: '5',
+                buzzerState: 'on',
+                greenLEDState: 'on',
+                redLEDState: 'off'
+            };
+            updatePredictionData(data);
+        };
+
+        const dbRef = ref(database, '/');
+        onValue(dbRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                updatePredictionData(data);
+            }
+        });
+    </script>
+
+
+
+</body>
+</html>
+'''
+
+@app.route('/')
+def home():
+    return render_template_string(html_content)
+
+if __name__ == '__main__':
+    app.run(debug=True)
