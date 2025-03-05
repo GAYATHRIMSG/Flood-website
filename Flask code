@@ -199,13 +199,13 @@ font-size: 1.5em;
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyCt1SuZh-dSKGX-FoFMvDGAJDSNUkvaZ4Q",
-            authDomain: "my-water-flow-project.firebaseapp.com",
-            databaseURL: "https://my-water-flow-project-default-rtdb.firebaseio.com",
-            projectId: "my-water-flow-project",
-            storageBucket: "my-water-flow-project.firebasestorage.app",
-            messagingSenderId: "669975750113",
-            appId: "1:669975750113:web:13dc07197139fc2a349ea0",
+            apiKey: "YOUR_FIREBASE_API_KEY",
+            authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
+            databaseURL: "YOUR_FIREBASE_DB_URL",
+            projectId: "YOUR_FIREBASE_PROJECT_ID",
+            storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
+            appId: "YOUR_FIREBASE_APP_ID"
             measurementId: "G-RM1WG8H61G"
         };
 
